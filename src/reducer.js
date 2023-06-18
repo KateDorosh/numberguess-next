@@ -8,6 +8,8 @@ export default function reducer(
     practiceMode: false,
     challengeLink: null,
     equationLength: 5,
+    unlimitedLength: 5,
+    numberLength: 5,
     arithmeticSigns: ["+", "-"],
     arithematicSignsToUseInternally: ["+", "-"],
     section: "game",
@@ -71,6 +73,16 @@ export default function reducer(
       return {
         ...state,
         equationLength: action.payload,
+      };
+    case "unlimitedLength":
+      return {
+        ...state,
+        unlimitedLength: action.payload,
+      };
+    case "numberLength":
+      return {
+        ...state,
+        numberLength: action.payload,
       };
     case "arithmeticSigns":
       return {

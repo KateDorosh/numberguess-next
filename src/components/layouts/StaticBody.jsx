@@ -2,7 +2,6 @@ import { Row, Col } from "react-bootstrap";
 import ShareBar from "./ShareBar";
 import CustomParagraph from "../util/CustomParagraph";
 import store from "../../store";
-import Link from "next/link";
 
 const StaticBody = () => {
   const numbersOnlyMode = store.getState().numbersOnlyMode;
@@ -175,34 +174,34 @@ const StaticBody = () => {
       <Row className="text-center pb-4 footer">
         <div>
           Number Guess © {new Date().getFullYear()} All rights reserved. |{" "}
-          <Link
+          <a
             style={{ textDecoration: "none", color: "inherit" }}
             href="mailto:assist@techie.com"
           >
             Feedback
-          </Link>{" "}
+          </a>{" "}
           |{" "}
-          <Link
+          <a
             style={{ textDecoration: "none", color: "inherit" }}
             href="/privacy-policy"
           >
             Privacy Policy
-          </Link>{" "}
+          </a>{" "}
           |{" "}
-          <Link
+          <a
             style={{ textDecoration: "none", color: "inherit" }}
             href="https://www.facebook.com/numberguess"
             target="_blank"
           >
             <i className="fab fa-facebook-square"></i>
-          </Link>{" "}
-          <Link
+          </a>{" "}
+          <a
             style={{ textDecoration: "none", color: "inherit" }}
             href="https://www.youtube.com/numberguess"
             target="_blank"
           >
             <i className="fab fa-youtube-square"></i>
-          </Link>
+          </a>
         </div>
       </Row>
     </div>

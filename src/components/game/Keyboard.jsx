@@ -40,7 +40,6 @@ const Keyboard = (props) => {
 
   useEffect(() => {
     keyCheck();
-    // react-hooks/exhaustive-deps
   }, [props.currentLine]);
 
   const appendDisabledClass = () => (numbersOnlyMode ? "fa-disabled" : "");

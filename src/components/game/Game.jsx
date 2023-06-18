@@ -37,12 +37,15 @@ const keys = [
 const Game = (props) => {
   const dailyChallengeMode = store.getState().dailyChallengeMode;
   const practiceMode = store.getState().practiceMode;
+  const [numbersOnlyMode, setNumbersOnlyMode] = useState(
+    store.getState().numbersOnlyMode
+  );
   const arithmeticSigns = store.getState().arithmeticSigns;
   const [moves, setMoves] = useState(
     store.getState().moves.moves ? store.getState().moves.moves : []
   );
   const [difficulty, setDifficulty] = useState(store.getState().equationLength);
-  // const [gameStatus, setGameStatus] = useState(null);
+
   const gameStatus =
     typeof window !== "undefined" &&
     JSON.parse(localStorage.getItem(`Guess-Status-${difficulty}`));
@@ -50,10 +53,6 @@ const Game = (props) => {
     gameStatus ? gameStatus.solution : ""
   );
   const [challengeLink, setChallengeLink] = useState(null);
-
-  const [numbersOnlyMode, setNumbersOnlyMode] = useState(
-    store.getState().numbersOnlyMode
-  );
 
   const [currentLine, setCurrentLine] = useState(
     store.getState().moves.currentLine ? store.getState().moves.currentLine : 0
