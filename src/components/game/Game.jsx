@@ -4,7 +4,6 @@ import Keyboard from "./Keyboard";
 import NavBar from "../layouts/NavBar";
 import store from "../../store";
 import Validation from "../util/Validate";
-// import GenerateEquation from "./GenerateEquation";
 import RecordGameResult from "../util/RecordGameResult";
 import Popup from "../util/Popup";
 import { checkNoOperatorsInExpression } from "../../utils/utilityFunctions";
@@ -44,7 +43,18 @@ const Game = (props) => {
   const [moves, setMoves] = useState(
     store.getState().moves.moves ? store.getState().moves.moves : []
   );
-  const [difficulty, setDifficulty] = useState(store.getState().equationLength);
+
+  let fieldLength = 0;
+  if (numbersOnlyMode) {
+    fieldLength = store.getState().numberLength;
+  }
+  if (dailyChallengeMode) {
+    fieldLength = store.getState().equationLength;
+  }
+  if (practiceMode) {
+    fieldLength = store.getState().unlimitedLength;
+  }
+  const [difficulty, setDifficulty] = useState(fieldLength);
 
   const gameStatus =
     typeof window !== "undefined" &&
@@ -147,6 +157,9 @@ const Game = (props) => {
   };
 
   const registerKey = (key) => {
+    if (status === "lost" || status === "won") {
+      setPopup(status);
+    }
     if (status === "playing") {
       let index;
       let newMoves = moves;
@@ -422,6 +435,21 @@ const Game = (props) => {
         type: "saveEquation",
         payload: newEquation,
       });
+      if (
+        practiceMode === false &&
+        numbersOnlyMode === false &&
+        gameStatus === null
+      ) {
+        const currentStatus = {
+          guessStatus: [],
+          solution: newEquation.equation,
+        };
+        window.guessStatus = JSON.stringify(currentStatus);
+        localStorage.setItem(
+          `Guess-Status-${difficulty}`,
+          JSON.stringify(currentStatus)
+        );
+      }
     }
   };
 
@@ -450,9 +478,9 @@ const Game = (props) => {
       registerKey(e.key);
     }
     // when the game lost, lost popup is displayed
-    if (status === "lost") {
-      setPopup(status);
-    }
+    // if (status === "lost") {
+    //   setPopup(status);
+    // }
   });
 
   useEffect(() => {

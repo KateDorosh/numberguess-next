@@ -2,6 +2,7 @@ import { Row, Col } from "react-bootstrap";
 import ShareBar from "./ShareBar";
 import CustomParagraph from "../util/CustomParagraph";
 import store from "../../store";
+import Link from "next/link";
 
 const StaticBody = () => {
   const numbersOnlyMode = store.getState().numbersOnlyMode;
@@ -151,15 +152,19 @@ const StaticBody = () => {
             <h4 style={{ fontWeight: "600" }}>What is Number Guess?</h4>
             <CustomParagraph>
               Introducing Number Guess, a math game inspired by the success of
-              Wordle in 2021. This exciting twist brings you Wordle with
-              numbers. Your goal is to guess the correct numbers or mathematical
-              equations. Immerse yourself in the challenge as you input your
-              guesses, with the added excitement of colored highlights offering
-              valuable clues. These vibrant cues indicate your proximity to
-              solving the puzzle, and when all rows are brilliantly illuminated
-              in GREEN, victory is yours! Engage in this delightful math game
-              with friends and embark on a brain-training adventure that
-              guarantees endless fun.
+              Wordle in 2021.
+            </CustomParagraph>
+            <CustomParagraph>
+              This exciting twist brings you Wordle with numbers. Your goal is
+              to guess the correct numbers or mathematical equations. Immerse
+              yourself in the challenge as you input your guesses, with the
+              added excitement of colored highlights offering valuable clues.
+            </CustomParagraph>
+            <CustomParagraph>
+              These vibrant cues indicate your proximity to solving the puzzle,
+              and when all rows are brilliantly illuminated in GREEN, victory is
+              yours! Engage in this delightful math game with friends and embark
+              on a brain-training adventure that guarantees endless fun.
             </CustomParagraph>
           </Col>
         </Row>
@@ -174,34 +179,34 @@ const StaticBody = () => {
       <Row className="text-center pb-4 footer">
         <div>
           Number Guess © {new Date().getFullYear()} All rights reserved. |{" "}
-          <a
+          <Link
             style={{ textDecoration: "none", color: "inherit" }}
             href="mailto:assist@techie.com"
           >
             Feedback
-          </a>{" "}
+          </Link>{" "}
           |{" "}
-          <a
+          <Link
             style={{ textDecoration: "none", color: "inherit" }}
             href="/privacy-policy"
           >
             Privacy Policy
-          </a>{" "}
+          </Link>{" "}
           |{" "}
-          <a
+          <Link
             style={{ textDecoration: "none", color: "inherit" }}
             href="https://www.facebook.com/numberguess"
             target="_blank"
           >
             <i className="fab fa-facebook-square"></i>
-          </a>{" "}
-          <a
+          </Link>{" "}
+          <Link
             style={{ textDecoration: "none", color: "inherit" }}
             href="https://www.youtube.com/numberguess"
             target="_blank"
           >
             <i className="fab fa-youtube-square"></i>
-          </a>
+          </Link>
         </div>
       </Row>
     </div>

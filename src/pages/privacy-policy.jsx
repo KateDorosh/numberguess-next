@@ -1,15 +1,14 @@
 import { Row } from "react-bootstrap";
 import Link from "next/link";
-import SEO from "@/components/SEO";
+import Head from "next/head";
 
 export default function PrivacyPolicy() {
-  const SEO_DATA = {
-    title: "Privacy Policy",
-  };
   return (
     <div className="mainColor">
-      <SEO SEO_DATA={SEO_DATA} />
-      <meta name="googlebot" content="noindex" />
+      <Head>
+        <meta name="robots" content="noindex" />
+        <meta name="googlebot" content="noindex" />
+      </Head>
       <Row className="text-center mx-auto pt-2 pb-2" style={{ width: "300px" }}>
         <Link className="privateBtn" style={{ width: "130px" }} href="/">
           Number Guess

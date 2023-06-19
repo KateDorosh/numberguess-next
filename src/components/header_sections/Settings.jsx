@@ -8,6 +8,8 @@ const Settings = () => {
 
   const [settings, setSettings] = useState({
     equationLength: 5,
+    unlimitedLength: 5,
+    numberLength: 5,
     arithmeticSigns: ["+", "-", "/", "*"],
     darkMode: false,
     colorBlindMode: false,
@@ -34,6 +36,8 @@ const Settings = () => {
   const updateSettings = () => {
     setSettings({
       equationLength: store.getState().equationLength,
+      numberLength: store.getState().numberLength,
+      unlimitedLength: store.getState().unlimitedLength,
       arithmeticSigns: store.getState().arithmeticSigns,
       darkMode: store.getState().darkMode,
       colorBlindMode: store.getState().colorBlindMode,
@@ -92,47 +96,98 @@ const Settings = () => {
             <Col className="mx-auto" md="10" sm="7" xs="8">
               <Row className="justify-content-center equation">
                 <Cell
-                  type="changeEquation"
+                  type="numberChange"
                   value={5}
                   className={
-                    settings.equationLength === 5 ? "activeSettingsCell" : ""
+                    settings.numberLength === 5 ? "activeSettingsCell" : ""
                   }
                 />
                 <Cell
-                  type="changeEquation"
+                  type="numberChange"
                   value={6}
                   className={
-                    settings.equationLength === 6 ? "activeSettingsCell" : ""
+                    settings.numberLength === 6 ? "activeSettingsCell" : ""
                   }
                 />
                 <Cell
-                  type="changeEquation"
+                  type="numberChange"
                   value={7}
                   className={
-                    settings.equationLength === 7 ? "activeSettingsCell" : ""
+                    settings.numberLength === 7 ? "activeSettingsCell" : ""
                   }
                 />
                 <Cell
-                  type="changeEquation"
+                  type="numberChange"
                   value={8}
                   className={
-                    settings.equationLength === 8 ? "activeSettingsCell" : ""
+                    settings.numberLength === 8 ? "activeSettingsCell" : ""
                   }
                 />
                 <Cell
-                  type="changeEquation"
+                  type="numberChange"
                   value={9}
                   className={
-                    settings.equationLength === 9 ? "activeSettingsCell" : ""
+                    settings.numberLength === 9 ? "activeSettingsCell" : ""
                   }
                 />
                 <Cell
-                  type="changeEquation"
+                  type="numberChange"
                   value={10}
                   className={
-                    settings.equationLength === 10 ? "activeSettingsCell" : ""
+                    settings.numberLength === 10 ? "activeSettingsCell" : ""
                   }
                 />
+              </Row>
+            </Col>
+          </div>
+        ) : practiceMode ? (
+          <div>
+            <Col className="mx-auto" sm="10" xs="12">
+              <h5 className="mt-2 mb-0">Equation Length</h5>
+            </Col>
+            <Col className="mx-auto" md="10" sm="7" xs="8">
+              <Row className="justify-content-center equation">
+                <div className="equation-container">
+                  <div className="equation-box">
+                    <Cell
+                      type="unlimitedChange"
+                      value={5}
+                      className={
+                        settings.unlimitedLength === 5
+                          ? "activeSettingsCell"
+                          : ""
+                      }
+                    />
+                    <div>Easy</div>
+                    <div className="text-equation-length">1 Operator</div>
+                  </div>
+                  <div className="equation-box">
+                    <Cell
+                      type="unlimitedChange"
+                      value={6}
+                      className={
+                        settings.unlimitedLength === 6
+                          ? "activeSettingsCell"
+                          : ""
+                      }
+                    />
+                    <div>Medium</div>
+                    <div className="text-equation-length">1-2 Operators</div>
+                  </div>
+                  <div className="equation-box">
+                    <Cell
+                      type="unlimitedChange"
+                      value={8}
+                      className={
+                        settings.unlimitedLength === 8
+                          ? "activeSettingsCell"
+                          : ""
+                      }
+                    />
+                    <div>Hard</div>
+                    <div className="text-equation-length">1-3 Operators</div>
+                  </div>
+                </div>
               </Row>
             </Col>
           </div>
@@ -308,7 +363,21 @@ const Cell = (props) => {
       payload: value,
     });
   };
+  const changeUnlimitedLength = (value) => {
+    reloadEquation();
+    store.dispatch({
+      type: "unlimitedLength",
+      payload: value,
+    });
+  };
 
+  const changeNumberLength = (value) => {
+    reloadEquation();
+    store.dispatch({
+      type: "numberLength",
+      payload: value,
+    });
+  };
   const changeArithmeticSigns = (sign) => {
     reloadEquation();
     const newValue = props.settings.arithmeticSigns.includes(sign)
@@ -342,9 +411,19 @@ const Cell = (props) => {
   const onClickHandler = () => {
     if (props.disabled) return;
 
-    props.type === "changeEquation"
-      ? changeEquationLength(+props.value)
-      : changeArithmeticSigns(props.value.toString());
+    // props.type === "changeEquation"
+    //   ? changeEquationLength(+props.value)
+    //   : changeArithmeticSigns(props.value.toString());
+    switch (props.type) {
+      case "changeEquation":
+        return changeEquationLength(+props.value);
+      case "unlimitedChange":
+        return changeUnlimitedLength(+props.value);
+      case "numberChange":
+        return changeNumberLength(+props.value);
+      default:
+        return changeArithmeticSigns(props.value.toString());
+    }
   };
 
   return (

@@ -7,10 +7,30 @@ const GameField = (props) => {
   const numbersOnlyMode = store.getState().numbersOnlyMode;
   const practiceMode = store.getState().practiceMode;
   const gameStatus = store.getState().status;
-  const difficulty = store.getState().equationLength;
+
+  let difficulty = 0;
+  if (dailyChallengeMode) {
+    difficulty = store.getState().equationLength;
+  }
+  if (practiceMode) {
+    difficulty = store.getState().unlimitedLength;
+  }
+  if (numbersOnlyMode) {
+    difficulty = store.getState().numberLength;
+  }
   const [currentEquation, setCurrentEquation] = useState("");
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState();
   const [remainTime, setRemainTime] = useState();
+
+  useEffect(() => {
+    const guessStatus = JSON.parse(
+      localStorage.getItem(`Guess-Status-${difficulty}`)
+    );
+    if (guessStatus) {
+      setCurrentEquation(guessStatus.solution);
+      setResult(eval(guessStatus.solution));
+    }
+  }, []);
 
   useEffect(() => {
     if (JSON.parse(localStorage.getItem(`Guess-Status-${difficulty}`))) {
@@ -240,11 +260,13 @@ const GameField = (props) => {
             <div>
               <span className="text-top-gameField">Equation uses</span>{" "}
               <span className="bold-text">
-                {countOperators(store.getState().equation)}
+                {currentEquation
+                  ? countOperators(currentEquation)
+                  : countOperators(store.getState().equation)}
               </span>{" "}
               <span className="text-top-gameField">operator that equals</span>{" "}
               <span className="bold-text">
-                {eval(store.getState().equation)}
+                {result ? result : eval(store.getState().equation)}
               </span>
             </div>
           )}
